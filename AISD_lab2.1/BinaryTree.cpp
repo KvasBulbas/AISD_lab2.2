@@ -1,5 +1,6 @@
 #include "BinaryTree.h"
 #include <iostream>
+#include <vector>
 
 void BinaryTree::clearTree(Node* subTreeRoot)
 {
@@ -80,7 +81,6 @@ int BinaryTree::getHeight() const
 
 int BinaryTree::getHeight(Node* nd) const
 {
-
 	if (nd == nullptr)
 		return 0;
 
@@ -103,9 +103,60 @@ int BinaryTree::getHeight(Node* nd) const
 		height = leftHeight;
 
 	return height + 1;
-
-
 }
 
 
+void BinaryTree::printTree()
+{
+	return printTree(_root);
+}
 
+void BinaryTree::printTree(Node* nd)
+{
+	if (nd == nullptr)
+	{
+		std::cerr << "Tree is empty";
+		return;
+	}
+
+	int height = getHeight(nd);
+
+	for (int level = 0; level < height; level++)
+	{
+		//std::cout << level << '\n';
+		std::vector<Node*> currentLevel;
+		currentLevel.push_back(_root);
+
+		for (int i = 0; i < level; i++)
+		{
+			std::vector<Node*> nextLevel;
+			nextLevel.reserve(currentLevel.size() * 2);
+
+			for (Node* Node : currentLevel)
+			{
+				if (Node)
+				{
+					nextLevel.push_back(Node->left);
+					nextLevel.push_back(Node->right);
+				}
+				else
+				{
+					nextLevel.push_back(nullptr);
+					nextLevel.push_back(nullptr);
+				}
+			}
+
+			currentLevel.swap(nextLevel);
+		}
+
+		for (int i = 0, tabs = 6; i < currentLevel.size(); i++, tabs--)
+		{
+			if (currentLevel[i])
+				std::cout << currentLevel[i]->key << "  ";
+			else
+				std::cout << -1 << ' ';
+		}
+		std::cout << '\n';
+	}
+
+}

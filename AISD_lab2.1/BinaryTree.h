@@ -17,6 +17,11 @@ public:
 	int getHeight() const;
 	int getHeight(Node* nd) const;
 
+	void printTree();
+	void printTree(Node* nd);
+
+
+
 protected:
 	Node* _root = nullptr;
 };
