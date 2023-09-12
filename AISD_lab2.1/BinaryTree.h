@@ -5,6 +5,7 @@ public:
 	struct Node;
 	BinaryTree() = default;
 	virtual ~BinaryTree();
+	BinaryTree(const BinaryTree& tree);
 
 	void clearTree();
 	void clearTree(Node* subTreeRoot);
@@ -35,6 +36,9 @@ public:
 	bool deleteNodeByKey(Node* nd, const int k);
 
 	bool deleteNode(Node* nd, Node* parent);
+
+	BinaryTree& operator = (const BinaryTree& outTree);
+	void copyTree(Node*& inTree, Node* outTree);
 
 protected:
 	Node* _root = nullptr;

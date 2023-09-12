@@ -29,6 +29,23 @@ void BinaryTree::clearTree()
 	clearTree(_root);
 }
 
+BinaryTree::BinaryTree(const BinaryTree& tree)
+{
+	_root = new Node();
+	_root->key = tree._root->key;
+	_root->left = nullptr;
+	_root->right = nullptr;
+
+
+	if (tree._root->left)
+		copyTree(_root->left, tree._root->left);
+	if (tree._root->right)
+		copyTree(_root->right, tree._root->right);
+	//this->printTree();
+}
+
+
+
 bool BinaryTree::isEmpty() const
 {
 	if (_root)
@@ -325,5 +342,220 @@ bool BinaryTree::deleteNodeByKey(Node* nd, const int k)
 
 bool BinaryTree::deleteNode(Node* forDelete, Node* parent)
 {
+	if (forDelete == nullptr)
+		return false;
+
+	if (forDelete->left == nullptr && forDelete->right == nullptr)
+	{
+		if (parent && parent->left == forDelete)
+			parent->left = nullptr;
+
+		if (parent && parent->right == forDelete)
+			parent->right = nullptr;
+
+		if (parent == nullptr)
+		{
+			_root = nullptr;
+		}
+
+		delete forDelete;
+		return true;
+	}
+
+	if (forDelete->left == nullptr && forDelete->right != nullptr)
+	{
+		//std::cout << "right: \n";
+		if (parent && parent->left == forDelete)
+		{
+			//std::cout << "parent left: \n";
+			parent->left = forDelete->right;
+		}
+		if (parent && parent->right == forDelete)
+		{
+			//std::cout << "parent right: \n";
+			parent->right = forDelete->right;
+		}
+		if (parent == nullptr)
+		{
+			Node* replacingNode = getFreeNode(_root);
+			_root = _root->right;
+			forDelete->right = nullptr;
+			forDelete->left = nullptr;
+			forDelete->right = nullptr;
+		}
+		delete forDelete;
+		return true;
+
+	}
+
+	if (forDelete->left != nullptr && forDelete->right == nullptr)
+	{
+		if (parent && parent->left == forDelete)
+			parent->left = forDelete->left;
+
+		if (parent && parent->right == forDelete)
+			parent->right = forDelete->left;
+
+		if (parent == nullptr)
+		{
+			_root = _root->left;
+			forDelete->left = nullptr;
+			forDelete->left = nullptr;
+			forDelete->right = nullptr;
+		}
+		delete forDelete;
+		return true;
+	}
+
+	if (forDelete->left && forDelete->right)
+	{
+		if (parent)
+		{
+			if (parent->left == forDelete)
+			{
+				//std::cout << "left: we found a child \n";
+				Node* replacingNode = getFreeNode(parent);
+
+				//std::cout << "replacing node is found: id: " << replacingNode << " key: " << replacingNode->key << '\n';
+				Node* parentOfReplacingNode = findParent(replacingNode);
+
+				if (parentOfReplacingNode == forDelete)//если заменяемый == родитель замены
+				{
+					parent->left = replacingNode;
+					if (forDelete->left == replacingNode)
+					{
+						replacingNode->left = nullptr;
+						replacingNode->right = forDelete->right;
+					}
+					else
+					{
+						replacingNode->right = nullptr;
+						replacingNode->left = forDelete->left;
+					}
+
+				}
+				else
+				{
+					parent->left = replacingNode;
+					replacingNode->right = forDelete->right;
+					replacingNode->left = forDelete->left;
+
+					if (parentOfReplacingNode->left == replacingNode)
+						parentOfReplacingNode->left = nullptr;
+					else
+						parentOfReplacingNode->right = nullptr;
+				}
+				//std::cout << "replacing is ended \n";
+				/*std::cout << "try to print after replcing: \n";
+				this->printTree();*/
+			}
+
+			if (parent->right == forDelete)
+			{
+				//std::cout << "right: we found a child \n";
+				Node* replacingNode = getFreeNode(parent);
+				//std::cout << "we found a free node: " << replacingNode->key << "\n";
+				Node* parentOfReplacingNode = findParent(replacingNode);
+
+				if (parentOfReplacingNode == forDelete)//если заменяемый == родитель замены
+				{
+					parent->right = replacingNode;
+					if (forDelete->left == replacingNode)
+					{
+						replacingNode->left = nullptr;
+						replacingNode->right = forDelete->right;
+					}
+					else
+					{
+						replacingNode->right = nullptr;
+						replacingNode->left = forDelete->left;
+					}
+				}
+				else
+				{
+					parent->right = replacingNode;
+					replacingNode->right = forDelete->right;
+					replacingNode->left = forDelete->left;
+
+					if (parentOfReplacingNode->left == replacingNode)
+						parentOfReplacingNode->left = nullptr;
+					else
+						parentOfReplacingNode->right = nullptr;
+				}
+
+				//std::cout << "replacing is ended \n";
+				/*std::cout << "try to print after replcing: \n";
+
+				this->printTree();*/
+			}
+		}
+		else
+		{
+			Node* replacingNode = getFreeNode(_root);
+			Node* parentOfReplacingNode = findParent(replacingNode);
+
+			if (parentOfReplacingNode == _root)
+			{
+				if (_root->left == replacingNode)
+					_root->left = nullptr;
+				else
+					_root->right = nullptr;
+				replacingNode->left = _root->left;
+				replacingNode->right = _root->right;
+				_root = replacingNode;
+				forDelete->left = nullptr;
+				forDelete->right = nullptr;
+			}
+			else
+			{
+				if (parentOfReplacingNode->left == replacingNode)
+					parentOfReplacingNode->left = nullptr;
+				else
+					parentOfReplacingNode->right = nullptr;
+				replacingNode->left = _root->left;
+				replacingNode->right = _root->right;
+				this->_root = replacingNode;
+				forDelete->left = nullptr;
+				forDelete->right = nullptr;
+				//this->printTree();
+			}
+		}
+		delete forDelete;
+		/*std::cout << "try to print after delete a node: \n";
+		this->printTree();*/
+		return true;
+	}
+
 	return false;
+}
+
+
+BinaryTree& BinaryTree::operator=(const BinaryTree& outTree)
+{
+	if (&outTree == this)
+		return *this;
+
+	if (this->_root)
+		clearTree(this->_root);
+
+	copyTree(this->_root, outTree._root);
+}
+
+void BinaryTree::copyTree(Node*& inTree, Node* outTree)
+{
+	if (outTree == nullptr || outTree == inTree)
+		return;
+
+	inTree = new Node;
+	inTree->key = outTree->key;
+	inTree->left = nullptr;
+	inTree->right = nullptr;
+
+	if (outTree->left)
+		copyTree(inTree->left, outTree->left);
+
+	if (outTree->right)
+		copyTree(inTree->right, outTree->right);
+
+
 }
