@@ -6,6 +6,8 @@ public:
 	BinaryTree() = default;
 	virtual ~BinaryTree();
 
+	void clearTree();
+	void clearTree(Node* subTreeRoot);
 
 protected:
 	Node* _root = nullptr;
