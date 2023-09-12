@@ -9,6 +9,11 @@ public:
 	void clearTree();
 	void clearTree(Node* subTreeRoot);
 
+	bool isEmpty() const;
+
+	Node* addNode(int k);
+	Node* addNode(Node* nd, int k);
+
 protected:
 	Node* _root = nullptr;
 };
