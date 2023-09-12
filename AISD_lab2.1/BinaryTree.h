@@ -31,6 +31,11 @@ public:
 	int getCountOfNode() const;
 	int getCountOfNode(Node* nd) const;
 
+	bool deleteNodeByKey(const int k);
+	bool deleteNodeByKey(Node* nd, const int k);
+
+	bool deleteNode(Node* nd, Node* parent);
+
 protected:
 	Node* _root = nullptr;
 };

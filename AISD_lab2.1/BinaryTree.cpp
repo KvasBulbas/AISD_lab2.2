@@ -104,7 +104,6 @@ int BinaryTree::getHeight(Node* nd) const
 	return height + 1;
 }
 
-
 void BinaryTree::printTree()
 {
 	return printTree(_root);
@@ -235,7 +234,6 @@ BinaryTree::Node* BinaryTree::findParent(Node* nd) const
 	return nullptr;
 }
 
-
 BinaryTree::Node* BinaryTree::getFreeNode() const
 {
 	return getFreeNode(_root);
@@ -309,4 +307,23 @@ int BinaryTree::getCountOfNode(Node* nd) const
 	return count;
 }
 
+bool BinaryTree::deleteNodeByKey(const int k)
+{
+	return deleteNodeByKey(_root, k);
+}
 
+bool BinaryTree::deleteNodeByKey(Node* nd, const int k)
+{
+	Node* forDelete = nlrSearch(nd, k);
+	//std::cout << "forDelete id: " << forDelete << '\n';
+	Node* parent = findParent(forDelete);
+	//std::cout << "forDelete: " << forDelete->key << '\n';
+	//std::cout << "parent: " << parent << '\n'; //<< " for delete: " << forDelete->key << '\n';
+	return deleteNode(forDelete, parent);
+
+}
+
+bool BinaryTree::deleteNode(Node* forDelete, Node* parent)
+{
+	return false;
+}
