@@ -73,5 +73,39 @@ BinaryTree::Node* BinaryTree::addNode(Node* nd, const int k)
 
 }
 
+int BinaryTree::getHeight() const
+{
+	return getHeight(_root);
+}
+
+int BinaryTree::getHeight(Node* nd) const
+{
+
+	if (nd == nullptr)
+		return 0;
+
+	if ((nd->left == nullptr) && (nd->right == nullptr))
+		return 1;
+
+	int leftHeight = 0, rightHeight = 0;
+
+	if (nd->left)
+		leftHeight = getHeight(nd->left);
+
+	if (nd->right)
+		rightHeight = getHeight(nd->right);
+
+	int height;
+
+	if (rightHeight > leftHeight)
+		height = rightHeight;
+	else
+		height = leftHeight;
+
+	return height + 1;
+
+
+}
+
 
 

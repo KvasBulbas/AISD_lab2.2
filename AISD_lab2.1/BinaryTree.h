@@ -14,6 +14,9 @@ public:
 	Node* addNode(int k);
 	Node* addNode(Node* nd, int k);
 
+	int getHeight() const;
+	int getHeight(Node* nd) const;
+
 protected:
 	Node* _root = nullptr;
 };
