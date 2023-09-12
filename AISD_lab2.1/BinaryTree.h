@@ -25,6 +25,12 @@ public:
 
 	Node* findParent(Node* nd) const;
 
+	Node* getFreeNode() const;
+	Node* getFreeNode(Node* nd) const;
+
+	int getCountOfNode() const;
+	int getCountOfNode(Node* nd) const;
+
 protected:
 	Node* _root = nullptr;
 };

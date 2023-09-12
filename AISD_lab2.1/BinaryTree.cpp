@@ -236,4 +236,77 @@ BinaryTree::Node* BinaryTree::findParent(Node* nd) const
 }
 
 
+BinaryTree::Node* BinaryTree::getFreeNode() const
+{
+	return getFreeNode(_root);
+}
+
+BinaryTree::Node* BinaryTree::getFreeNode(Node* nd) const
+{
+	if (nd == nullptr)
+		throw "get free: wrong Node";
+
+	/*std::cout << "newNode\n";
+	std::cout << "\nnd key: " << nd->key << " nd id: " << nd << '\n';*/
+
+
+	if (nd->left == nullptr && nd->right == nullptr)
+		return nd;
+
+	int leftHeight = getHeight(nd->left);
+	int rightHeight = getHeight(nd->right);
+
+
+	if ((leftHeight > rightHeight && rightHeight != 0) || leftHeight == 0)
+	{
+		//std::cout << "rightWeight\n";
+		return getFreeNode(nd->right);
+	}
+
+	if ((leftHeight < rightHeight || rightHeight == 0))
+	{
+		//std::cout << "leftWeight\n";
+		return getFreeNode(nd->left);
+	}
+
+	//std::cout << "rightHeight == leftHeight\n";
+
+
+	int rightCount = getCountOfNode(nd->right);
+	int leftCount = getCountOfNode(nd->left);
+
+
+
+	if (rightHeight > leftCount)
+	{
+		//std::cout << "leftcount:" << leftCount << '\n';
+		return getFreeNode(nd->left);
+	}
+
+	//std::cout << "rightCount:" << rightCount << '\n';
+	return getFreeNode(nd->right);
+}
+
+int BinaryTree::getCountOfNode() const
+{
+	return getCountOfNode(_root);
+}
+
+int BinaryTree::getCountOfNode(Node* nd) const
+{
+	int count = 0;
+
+	if (nd)
+	{
+
+		count++;
+		count += getCountOfNode(nd->left);
+		count += getCountOfNode(nd->right);
+	}
+	else
+		return 0;
+
+	return count;
+}
+
 
