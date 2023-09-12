@@ -559,3 +559,44 @@ void BinaryTree::copyTree(Node*& inTree, Node* outTree)
 
 
 }
+
+std::vector<int> BinaryTree::getTreeAsVector() const
+{
+	return getTreeAsVector(_root);
+}
+
+std::vector<int> BinaryTree::getTreeAsVector(Node* nd) const
+{
+	if (nd == nullptr)
+		return std::vector<int>();
+
+	std::vector<int> keys;
+	keys.push_back(nd->key);
+
+	std::vector<Node*> currLevel;
+	currLevel.push_back(nd);
+
+	while (currLevel.size())
+	{
+		std::vector<Node*> nextLevel;
+		nextLevel.reserve(currLevel.size() * 2);
+
+		for (Node* node : currLevel)
+		{
+			if (node->left)
+			{
+				nextLevel.push_back(node->left);
+				keys.push_back(node->left->key);
+			}
+
+			if (node->right)
+			{
+				nextLevel.push_back(node->right);
+				keys.push_back(node->right->key);
+			}
+		}
+		currLevel.swap(nextLevel);
+	}
+
+	return keys;
+}

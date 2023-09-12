@@ -1,4 +1,6 @@
 #pragma once
+#include<vector>
+
 class BinaryTree
 {
 public:
@@ -40,6 +42,11 @@ public:
 	BinaryTree& operator = (const BinaryTree& outTree);
 	void copyTree(Node*& inTree, Node* outTree);
 
+	Node* getRoot() const;
+
+	std::vector<int> getTreeAsVector() const;
+	std::vector<int> getTreeAsVector(Node* subTreeRoot) const;
+
 protected:
 	Node* _root = nullptr;
 };
@@ -59,4 +66,6 @@ struct BinaryTree::Node
 
 	~Node() {};
 };
+
+
 

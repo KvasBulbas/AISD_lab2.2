@@ -1,4 +1,5 @@
 #include "BinaryTree.h"
+#include "BinaryTreeTester.h"
 #include <iostream>
 #include <ctime>
 #include <cassert>
@@ -6,7 +7,9 @@
 int main()
 {
 	srand(time(NULL));
+	BinaryTreeTester obj11(false);
 
+	obj11.test(50);
 
 	//BinaryTree obj1;
 	//for (int i = 0; i < 20; i++)
