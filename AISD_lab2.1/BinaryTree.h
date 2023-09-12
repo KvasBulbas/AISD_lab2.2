@@ -20,7 +20,10 @@ public:
 	void printTree();
 	void printTree(Node* nd);
 
+	Node* nlrSearch(const int k) const;
+	Node* nlrSearch(Node* nd, const int k) const;
 
+	Node* findParent(Node* nd) const;
 
 protected:
 	Node* _root = nullptr;

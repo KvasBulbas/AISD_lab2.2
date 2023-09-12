@@ -7,7 +7,6 @@ void BinaryTree::clearTree(Node* subTreeRoot)
 	if (subTreeRoot == nullptr)
 		return;
 
-
 	if (subTreeRoot->left)
 		clearTree(subTreeRoot->left);
 	if (subTreeRoot->right)
@@ -160,3 +159,81 @@ void BinaryTree::printTree(Node* nd)
 	}
 
 }
+
+BinaryTree::Node* BinaryTree::nlrSearch(const int k) const
+{
+	return nlrSearch(_root, k);
+}
+
+BinaryTree::Node* BinaryTree::nlrSearch(Node* nd, const int k) const
+{
+	if (nd)
+	{
+		if (nd->key == k)
+			return nd;
+
+		Node* leftChild = nlrSearch(nd->left, k);
+		Node* rightChild = nlrSearch(nd->right, k);
+
+		if (leftChild && leftChild->key == k)
+			return leftChild;
+
+		if (rightChild && rightChild->key == k)
+			return rightChild;
+
+		return nullptr;
+	}
+
+	return nullptr;
+}
+
+BinaryTree::Node* BinaryTree::findParent(Node* nd) const
+{
+	//std::cout << "child id: " << nd << '\n';
+	if (nd == nullptr || _root == nd)
+		return nullptr;
+
+	std::vector<Node*> currLevel;
+	currLevel.push_back(_root);
+
+	while (currLevel.size())
+	{
+
+		std::vector<Node*> nextLevel;
+		nextLevel.reserve(currLevel.size() * 2);
+
+		for (Node* node : currLevel)
+		{
+			if (node->left)
+			{
+				//std::cout << "left: " << node->left->key << " id: " << node->left << " nd id: " << nd << '\n';
+				if (node->left == nd)
+				{
+					//std::cout << "findParent: " << node << '\n';
+					return node;
+				}
+				nextLevel.push_back(node->left);
+
+			}
+
+			if (node->right)
+			{
+				//std::cout << "rigth: " << node->right->key <<  " id: " << node->right << " nd id: " << nd <<  '\n';
+
+				if (node->right == nd)
+				{
+					//std::cout << "findParent: " << node << '\n';
+					return node;
+				}
+
+				nextLevel.push_back(node->right);
+
+			}
+		}
+		currLevel.swap(nextLevel);
+	}
+	return nullptr;
+}
+
+
+
