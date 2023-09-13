@@ -600,3 +600,9 @@ std::vector<int> BinaryTree::getTreeAsVector(Node* nd) const
 
 	return keys;
 }
+
+
+BinaryTree::Node* BinaryTree::getRoot() const
+{
+	return _root;
+}

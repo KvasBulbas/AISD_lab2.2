@@ -14,8 +14,8 @@ void BinaryTreeTester::test(const int size)
     destructor();
     clear();
     height();
-    /*assign();
-    deleteNodeByKey();*/
+    assign();
+    deleteNodeByKey();
 }
 
 BinaryTree* BinaryTreeTester::allocateTree()
@@ -111,7 +111,7 @@ void BinaryTreeTester::height_trivialCases()
 }
 
 
-/*void BinaryTreeTester::deleteNodeByKey()
+void BinaryTreeTester::deleteNodeByKey()
 {
 
     BinaryTree* tree = allocateTree();
@@ -123,14 +123,14 @@ void BinaryTreeTester::height_trivialCases()
 
     for (int i = 0, j = m_maxSize - 1; i < m_maxSize; i++, j--)
     {
-        /*std::cout << "number: " << i << '\n';
-        tree->printTree();*/
-        //tree->deleteNodeByKey(i);
+        //std::cout << "number: " << i << '\n';
+        //tree->printTree();*/
+        tree->deleteNodeByKey(i);
         /*tree->printTree();
         std::cout << "\nsize: " << tree->getCountOfNode() << " true size: " << j << '\n';*/
-        //check_deleteNodeByKey(tree, j);
+        check_deleteNodeByKey(tree, j);
         /*if (tree->getCountOfNode() != j)
-            break;
+            break;*/
     }
     deallocateTree(tree);
 
@@ -198,4 +198,4 @@ void BinaryTreeTester::check_assignOfNode(const BinaryTree::Node* node1, const B
     if (node1->right && node2->right)
         check_assignOfNode(node1->right, node2->right);
 
-}*/
+}
