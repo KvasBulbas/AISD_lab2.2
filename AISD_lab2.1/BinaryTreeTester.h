@@ -15,7 +15,6 @@ protected:
     virtual BinaryTree* allocateTree();
     virtual void check_addAndCount(const BinaryTree* tree, const int size);
 
-    ////virtual void check_remove(const BinaryTree* tree, const int size);
     virtual void check_clear(const BinaryTree* tree, const int size);
     virtual void check_assign(const BinaryTree& tree1, const BinaryTree& tree2);
     virtual void check_assignOfNode(const BinaryTree::Node* node1, const BinaryTree::Node* node2);
@@ -29,7 +28,7 @@ private:
     void deallocateTree(BinaryTree* tree);
     void addAndCount();
     void destructor();
-    void clear(); //ToDo: реализовать
+    void clear();
     void assign();
     void height();
     void height_trivialCases();

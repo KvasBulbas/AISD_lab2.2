@@ -8,6 +8,7 @@
 #include<QListWidget>
 #include<QLineEdit>
 #include <QPushButton>
+#include <QGraphicsScene>
 
 
 
@@ -30,10 +31,21 @@ private slots:
     void onLvNodeListCurrentRowChanged(int currentRow);
 
 private:
+    int nodeRadius = 40;
     void displayError(QString const& msg);
     Ui::MainWindow *ui;
     BinaryTree tree;
     BinaryTree::Node* selectedNode = tree.getRoot();
+    QGraphicsScene *m_scene = nullptr;
+
+    void printTree();
+
+    void printEllipse(BinaryTree::Node* nd, int posX, int posY);
+
+    int getRange(BinaryTree::Node* nd);
+
+
+
 
 };
 #endif // MAINWINDOW_H

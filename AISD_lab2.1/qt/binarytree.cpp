@@ -407,6 +407,36 @@ BinaryTree::Node* BinaryTree::nlrSearch(Node* nd, const int k) const
     return nullptr;
 }
 
+BinaryTree::Node* BinaryTree::nlrSearch(const int k, int & leftPos, int & rightPos) const
+{
+    return nlrSearch(_root, k, leftPos, rightPos);
+}
+
+BinaryTree::Node* BinaryTree::nlrSearch(Node* nd, const int k, int & leftPos, int & rightPos) const
+{
+    if (nd)
+    {
+        if (nd->key == k)
+            return nd;
+
+        Node* leftChild = nlrSearch(nd->left, k);
+        Node* rightChild = nlrSearch(nd->right, k);
+
+        if (leftChild && leftChild->key == k)
+            return leftChild;
+
+        if (rightChild && rightChild->key == k)
+            return rightChild;
+
+        return nullptr;
+    }
+
+    return nullptr;
+}
+
+
+
+
 BinaryTree::Node* BinaryTree::findParent(Node* nd) const
 {
     //std::cout << "child id: " << nd << '\n';
@@ -576,7 +606,7 @@ void BinaryTree::printTree(Node* nd)
             else
                 /*qInfo()*/ std::cout  << '-' << ' ';
         }
-        std::cout << '\n';
+        std::cout << std::endl;
     }
 
 }

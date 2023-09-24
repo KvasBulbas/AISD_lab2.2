@@ -25,6 +25,9 @@ public:
     Node* nlrSearch(const int k) const;
     Node* nlrSearch(Node* nd, const int k) const;
 
+    Node* nlrSearch(const int k, int & leftPos, int & rightPos) const;
+    Node* nlrSearch(Node* nd, const int k, int & leftPos, int & rightPos) const;
+
     Node* findParent(Node* nd) const;
 
 

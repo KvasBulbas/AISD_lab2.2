@@ -124,6 +124,7 @@ void BinaryTreeTester::deleteNodeByKey()
 
     for (int i = 0, j = m_maxSize - 1; i < m_maxSize; i++, j--)
     {
+        assert(tree->nlrSearch(i) != nullptr);
         //std::cout << "number: " << i << '\n';
         //tree->printTree();*/
         tree->deleteNodeByKey(i);
@@ -132,6 +133,8 @@ void BinaryTreeTester::deleteNodeByKey()
         check_deleteNodeByKey(tree, j);
         /*if (tree->getCountOfNode() != j)
             break;*/
+        
+        assert(tree->nlrSearch(i) == nullptr);
     }
     deallocateTree(tree);
 
@@ -142,6 +145,7 @@ void BinaryTreeTester::deleteNodeByKey()
 
 void BinaryTreeTester::check_deleteNodeByKey(const BinaryTree* tree, const int size)
 {
+
     assert(tree->getCountOfNode() == size);
 }
 

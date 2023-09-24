@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         mainwindow.ui
         binarytree.h
         binarytree.cpp
+        GraphicsRectItem.cpp
+        GraphicsRectItem.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
